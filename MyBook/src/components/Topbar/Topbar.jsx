@@ -7,7 +7,7 @@ export const Topbar = () => {
   return (
     <div className="topbarcontainer">
       <div className="leftTopbar">
-        <span className="logo">mybook</span>
+        <span className="logo">MyBook</span>
       </div>
       <div className="centerTopbar">
         <span className="searchbar">
