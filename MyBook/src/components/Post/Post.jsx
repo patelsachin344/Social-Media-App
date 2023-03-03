@@ -1,13 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Post.css";
-
+import { format } from "timeago.js";
+import { Link } from "react-router-dom";
 import { MoreVert } from "@material-ui/icons";
-import { Users } from "../../DummyData";
+// import { Users } from "../../DummyData";
 import { useState } from "react";
+import axios from "axios";
 
 export const Post = ({ post }) => {
-  const [like, setLike] = useState(post.like);
+  const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
+  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+  const [user, setUser] = useState("");
+  useEffect(() => {
+    getUser();
+  }, [post.userId]);
+
+  // console.log(user.profilePicture);
+  const getUser = async () => {
+    const res = await axios.get(`http://localhost:8080/users/${post.userId}`);
+    // console.log(res.data);
+    setUser(res.data);
+  };
 
   const likeHandler = () => {
     setLike(isLiked ? like - 1 : like + 1);
@@ -19,15 +33,15 @@ export const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <img
-              className="postProfileImg"
-              src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
-              alt=""
-            />
-            <span className="postUsername">
-              {Users.filter((u) => u.id === post?.userId)[0].username}
-            </span>
-            <span className="postDate">{post.date}</span>
+            <Link to={`profile/${user.userId}`}>
+              <img
+                className="postProfileImg"
+                src={user.profilePicture || PF + "person/images.png"}
+                alt=""
+              />
+            </Link>
+            <span className="postUsername">{user.username}</span>
+            <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
             <MoreVert />
@@ -35,19 +49,19 @@ export const Post = ({ post }) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={post.photo} alt="" />
+          <img className="postImg" src={post.image} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
             <img
               className="likeIcon"
-              src="assets/like.png"
+              src={`${PF}like.png`}
               onClick={likeHandler}
               alt=""
             />
             <img
               className="likeIcon"
-              src="assets/heart.png"
+              src={`${PF}heart.png`}
               onClick={likeHandler}
               alt=""
             />

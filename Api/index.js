@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const morgan = require("morgan");
 const helmet = require("helmet");
+const cors = require("cors");
 const usersRouter = require("./routes/user.route");
 const authRouter = require("./routes/auth.route");
 const postRouter = require("./routes/post.route");
@@ -15,7 +16,7 @@ dotenv.config();
 // mongoose.connect(process.env.DATABASEURL, () => {
 //   console.log("Connecting to database");
 // });
-
+app.use(cors());
 app.use(express.json());
 app.use(helmet());
 app.use(morgan("common"));
