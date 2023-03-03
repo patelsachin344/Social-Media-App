@@ -5,16 +5,18 @@ import { Share } from "../Share/Share";
 import axios from "axios";
 import "./Feed.css";
 
-export const Feed = () => {
+export const Feed = ({ username }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     getPost();
   }, []);
 
   const getPost = async () => {
-    const res = await await axios.get(
-      "http://localhost:8080/post/timeline/6401fa2298bb25ff2bf06624"
-    );
+    const res = username
+      ? await await axios.get("http://localhost:8080/post/profile/" + username)
+      : await await axios.get(
+          "http://localhost:8080/post/timeline/6401fa2298bb25ff2bf06624"
+        );
     console.log(res.data);
     setPosts(res.data);
   };

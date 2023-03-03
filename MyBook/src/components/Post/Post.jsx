@@ -11,15 +11,17 @@ export const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [user, setUser] = useState("");
+  const [user, setUser] = useState({});
   useEffect(() => {
     getUser();
   }, [post.userId]);
 
   // console.log(user.profilePicture);
   const getUser = async () => {
-    const res = await axios.get(`http://localhost:8080/users/${post.userId}`);
-    // console.log(res.data);
+    const res = await axios.get(
+      `http://localhost:8080/users?userId=${post.userId}`
+    );
+    // console.log(res.data, "post");
     setUser(res.data);
   };
 
@@ -33,7 +35,7 @@ export const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`profile/${user.userId}`}>
+            <Link to={`profile/${user.username}`}>
               <img
                 className="postProfileImg"
                 src={user.profilePicture || PF + "person/images.png"}

@@ -68,6 +68,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+// get perticuller users posts
+
+router.get("/profile/:username", async (req, res) => {
+  try {
+    const user = await User.findOne({ username: req.params.username });
+    const posts = await Post.find({ userId: user._id });
+
+    res.status(200).json(posts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 // like or dislike posts
 
 router.put("/:id/like", async (req, res) => {
