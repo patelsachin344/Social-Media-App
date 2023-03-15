@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import "./Post.css";
 import { format } from "timeago.js";
 import { Link } from "react-router-dom";
@@ -6,17 +6,22 @@ import { MoreVert } from "@material-ui/icons";
 // import { Users } from "../../DummyData";
 import { useState } from "react";
 import axios from "axios";
+import { AuthContext } from "../../context/AuthContextt";
 
 export const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [user, setUser] = useState({});
+  const { user: currentUser } = useContext(AuthContext);
   useEffect(() => {
     getUser();
   }, [post.userId]);
+  useEffect(() => {
+    setIsLiked(post.likes.includes(currentUser.user._id));
+  }, [currentUser.user._id, post.like]);
 
-  // console.log(user.profilePicture);
+  console.log(currentUser.user._id);
   const getUser = async () => {
     const res = await axios.get(
       `http://localhost:8080/users?userId=${post.userId}`
@@ -26,6 +31,11 @@ export const Post = ({ post }) => {
   };
 
   const likeHandler = () => {
+    try {
+      axios.put(`http://localhost:8080/post/${post._id}/like`, {
+        userId: currentUser.user._id,
+      });
+    } catch (error) {}
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };
@@ -38,7 +48,11 @@ export const Post = ({ post }) => {
             <Link to={`profile/${user.username}`}>
               <img
                 className="postProfileImg"
-                src={user.profilePicture || PF + "person/images.png"}
+                src={
+                  user.profilePicture
+                    ? user.profilePicture
+                    : PF + "person/images.png"
+                }
                 alt=""
               />
             </Link>
@@ -64,6 +78,7 @@ export const Post = ({ post }) => {
             <img
               className="likeIcon"
               src={`${PF}heart.png`}
+              s
               onClick={likeHandler}
               alt=""
             />
