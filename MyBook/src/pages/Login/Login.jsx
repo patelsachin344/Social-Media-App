@@ -4,10 +4,13 @@ import React, { useContext, useRef } from "react";
 import { AuthContext } from "../../context/AuthContextt";
 import { getLoginUser } from "../../context/AuthAction";
 import { CircularProgress } from "@material-ui/core";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../../redux/Login/action";
 
 export const Login = () => {
   const email = useRef();
   const password = useRef();
+  const dispatcher = useDispatch();
   const { user, isLoading, error, dispatch } = useContext(AuthContext);
   const handlesubmin = (e) => {
     e.preventDefault();
@@ -16,8 +19,14 @@ export const Login = () => {
       { email: email.current.value, password: password.current.value },
       dispatch
     );
+    dispatcher(
+      loginUser({
+        email: email.current.value,
+        password: password.current.value,
+      })
+    );
   };
-  console.log(user?.payload.user, "from login");
+
   return (
     <div className="login">
       <div className="loginWrapper">
@@ -45,11 +54,7 @@ export const Login = () => {
               className="loginInput"
             />
             <button className="loginButton">
-              {isLoading ? (
-                <CircularProgress color="white" size="30px" />
-              ) : (
-                "Log In"
-              )}
+              {isLoading ? <CircularProgress size="30px" /> : "Log In"}
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">

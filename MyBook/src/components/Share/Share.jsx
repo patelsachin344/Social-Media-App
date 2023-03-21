@@ -1,26 +1,56 @@
 import React, { useContext, useRef, useState } from "react";
 import "./Share.css";
-import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons";
+import {
+  PermMedia,
+  Label,
+  Room,
+  EmojiEmotions,
+  Cancel,
+} from "@material-ui/icons";
 import { AuthContext } from "../../context/AuthContextt";
 import axios from "axios";
+import { useSelector } from "react-redux";
 export const Share = () => {
   const [file, setFile] = useState(null);
-  const { user } = useContext(AuthContext);
+  // const { user } = useContext(AuthContext);
+  const { currentUser } = useSelector((state) => state);
+  console.log(currentUser, "response from login ,action redux");
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
-      userId: user.user._id,
+      userId: currentUser._id,
       desc: desc.current.value,
     };
+    if (file) {
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "mybookimg");
+      data.append("cloud_name", "deje6buuz");
+
+      try {
+        // await axios.post("http://localhost:8080/api/upload", data);
+        const res = await axios.post(
+          "https://api.cloudinary.com/v1_1/deje6buuz/image/upload",
+          data
+        );
+        // console.log(res.data.url);
+        newPost.image = res.data.url;
+        setFile(null);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
     try {
       await axios.post("http://localhost:8080/post", newPost);
     } catch (error) {
       console.log(error);
     }
   };
-  console.log(file);
+  // console.log(file);
   return (
     <div className="share">
       <div className="shareWrapper">
@@ -28,19 +58,25 @@ export const Share = () => {
           <img
             className="shareProfileImg"
             src={
-              user.user.profilePicture
-                ? user.user.profilePicture
+              currentUser.profilePicture
+                ? currentUser.profilePicture
                 : PF + "person/images.png"
             }
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + user.user.username + "?"}
+            placeholder={"What's in your mind " + currentUser.username + "?"}
             className="shareInput"
             ref={desc}
           />
         </div>
         <hr className="shareHr" />
+        {file && (
+          <div className="shareImgContainer">
+            <img src={URL.createObjectURL(file)} alt="" className="shareImg" />
+            <Cancel className="cancelImg" onClick={() => setFile(null)} />
+          </div>
+        )}
         <form className="shareBottom" onSubmit={handleSubmit}>
           <div className="shareOptions">
             <label htmlFor="file" className="shareOption">

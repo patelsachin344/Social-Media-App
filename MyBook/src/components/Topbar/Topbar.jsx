@@ -3,13 +3,13 @@ import "./topbar.css";
 import { Link } from "react-router-dom";
 
 import { Chat, Notifications, Person, Search } from "@material-ui/icons";
-import { AuthContext } from "../../context/AuthContextt";
+import { useSelector } from "react-redux";
 
 export const Topbar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { user } = useContext(AuthContext);
-  console.log(user, "from topbar");
+  const { currentUser } = useSelector((state) => state);
+
   return (
     <div className="topbarcontainer">
       <div className="leftTopbar">
@@ -47,11 +47,11 @@ export const Topbar = () => {
           </div>
         </div>
 
-        <Link to={`/profile/${user.user.username}`}>
+        <Link to={`/profile/${currentUser.username}`}>
           <img
             src={
-              user.user.profilePicture
-                ? user.user.profilePicture
+              currentUser.profilePicture
+                ? currentUser.profilePicture
                 : PF + "person/images.png"
             }
             alt=""

@@ -17,13 +17,24 @@ export const loginError = (data) => {
     payload: data,
   };
 };
+export const followSuccess = (data) => {
+  return {
+    type: "FollowSuccess",
+    payload: data,
+  };
+};
+export const unFollowSuccess = (data) => {
+  return {
+    type: "UnFollowSuccess",
+    payload: data,
+  };
+};
 
 export const getLoginUser = async (loginBoby, dispatch) => {
   dispatch({ type: "LoginLoading" });
   try {
-    console.log("try to login", loginBoby);
     const res = await axios.post("http://localhost:8080/auth/login", loginBoby);
-    console.log(res.data?.user, "response");
+    // console.log(res.data?.user, "response");
     dispatch({ type: "LoginSuccess", payload: res.data });
   } catch (error) {
     dispatch({ type: "LoginError", payload: error });

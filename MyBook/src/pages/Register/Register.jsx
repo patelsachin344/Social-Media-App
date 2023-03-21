@@ -3,6 +3,8 @@ import "./Register.css";
 import React, { useRef } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signupUser } from "../../redux/Login/action";
 
 export const Register = () => {
   const username = useRef();
@@ -10,7 +12,9 @@ export const Register = () => {
   const password = useRef();
   const passwordAgain = useRef();
   const navigate = useNavigate();
-  const handleChange = async (e) => {
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
     e.preventDefault();
     if (passwordAgain.current.value !== password.current.value) {
       password.current.setCustomValidity("Password don't match!");
@@ -21,12 +25,8 @@ export const Register = () => {
         password: password.current.value,
         passwordAgain: passwordAgain.current.value,
       };
-      try {
-        await axios.post("http://localhost:8080/auth/register", user);
-        navigate("/login");
-      } catch (error) {
-        console.log(error);
-      }
+      dispatch(signupUser(user));
+      navigate("/login");
     }
   };
   return (
