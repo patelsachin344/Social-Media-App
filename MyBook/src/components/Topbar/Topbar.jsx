@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 export const Topbar = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { currentUser } = useSelector((state) => state);
+  const { currentUser } = useSelector((state) => state.user);
 
   return (
     <div className="topbarcontainer">

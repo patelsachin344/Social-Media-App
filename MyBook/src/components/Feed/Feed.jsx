@@ -1,32 +1,20 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Post } from "../Post/Post";
 import { Share } from "../Share/Share";
-import axios from "axios";
 import "./Feed.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getPost } from "../../redux/Post/action";
 
 export const Feed = ({ username }) => {
-  const [posts, setPosts] = useState([]);
-  const { currentUser } = useSelector((state) => state);
+  const { currentUser } = useSelector((state) => state.user);
+  const { posts } = useSelector((state) => state.post);
+  const dispatch = useDispatch();
 
-  // console.log(user, "from feed");
+  // console.log(posts, "from feed");
+
   useEffect(() => {
-    getPost();
+    dispatch(getPost(username, currentUser._id));
   }, []);
-  // console.log(username, "from feed");
-  const getPost = async () => {
-    const res = username
-      ? await await axios.get("http://localhost:8080/post/profile/" + username)
-      : await await axios.get(
-          `http://localhost:8080/post/timeline/${currentUser._id}`
-        );
-    // console.log(res.data);
-    setPosts(
-      res.data.sort((a, b) => {
-        return new Date(b.createdAt) - new Date(a.createdAt);
-      })
-    );
-  };
 
   return (
     <div className="feed">

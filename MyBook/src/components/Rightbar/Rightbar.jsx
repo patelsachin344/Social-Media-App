@@ -1,39 +1,30 @@
 import { Add, Remove } from "@material-ui/icons";
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContextt";
 import { Users } from "../../DummyData";
+import { getFriends } from "../../redux/Friends/action";
 import { Online } from "../Online/Online";
 import "./Rightbar.css";
 
 export const Rightbar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [friends, setFriends] = useState([]);
   const { dispatch } = useContext(AuthContext);
-  const { currentUser } = useSelector((state) => state);
-
+  const { currentUser } = useSelector((state) => state.user);
+  const { friends } = useSelector((state) => state.friends);
+  const dispather = useDispatch();
   const [follow, setFollow] = useState(
-    currentUser?.followings.includes(user?._id)
+    currentUser?.followings?.includes(user?._id)
   );
   useEffect(() => {
-    const getFriends = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:8080/users/friends/${user._id}`
-        );
-        setFriends(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
     if (user) {
-      getFriends();
+      dispather(getFriends(user._id));
     }
   }, [user]);
   useEffect(() => {
-    setFollow(currentUser?.followings.includes(user?._id));
+    setFollow(currentUser?.followings?.includes(user?._id));
   }, [currentUser, user]);
   // console.log(currentUser.followings.includes(user?._id));
   const handleFollow = async () => {

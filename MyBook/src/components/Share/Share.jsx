@@ -7,14 +7,15 @@ import {
   EmojiEmotions,
   Cancel,
 } from "@material-ui/icons";
-import { AuthContext } from "../../context/AuthContextt";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { uploadPost } from "../../redux/Post/action";
 export const Share = () => {
   const [file, setFile] = useState(null);
-  // const { user } = useContext(AuthContext);
-  const { currentUser } = useSelector((state) => state);
-  console.log(currentUser, "response from login ,action redux");
+  const { currentUser } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  // console.log(currentUser, "response from login ,action redux");
+
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
 
@@ -31,23 +32,23 @@ export const Share = () => {
       data.append("cloud_name", "deje6buuz");
 
       try {
-        // await axios.post("http://localhost:8080/api/upload", data);
         const res = await axios.post(
           "https://api.cloudinary.com/v1_1/deje6buuz/image/upload",
           data
         );
         // console.log(res.data.url);
         newPost.image = res.data.url;
-        setFile(null);
       } catch (error) {
         console.log(error);
       }
     }
+    if (desc.current.value || file) {
+      dispatch(uploadPost(newPost));
 
-    try {
-      await axios.post("http://localhost:8080/post", newPost);
-    } catch (error) {
-      console.log(error);
+      desc.current.value = null;
+      setFile(null);
+    } else {
+      alert("Please enter description or file");
     }
   };
   // console.log(file);

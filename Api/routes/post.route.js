@@ -8,6 +8,7 @@ const router = require("express").Router();
 router.post("/", async (req, res) => {
   try {
     const post = await Post.create(req.body);
+    // const postData = await post.save();
     res.status(200).json(post);
   } catch (error) {
     res.status(500).json(error);
@@ -73,7 +74,10 @@ router.get("/", async (req, res) => {
 router.get("/profile/:username", async (req, res) => {
   try {
     const user = await User.findOne({ username: req.params.username });
+    // console.log(user);
+
     const posts = await Post.find({ userId: user._id });
+    // const posts = await Post.find({ userId: user._id }).populate("userId");
 
     res.status(200).json(posts);
   } catch (error) {

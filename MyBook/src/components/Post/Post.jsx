@@ -14,7 +14,7 @@ export const Post = ({ post }) => {
   const [isLiked, setIsLiked] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { currentUser, getUser } = useSelector((state) => state);
+  const { currentUser, getUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getSingleUser(post.userId));
@@ -49,7 +49,8 @@ export const Post = ({ post }) => {
                 alt=""
               />
             </Link>
-            <span className="postUsername">{getUser.username}</span>
+            {/* <span className="postUsername">{getUser.username}</span> */}
+            <span className="postUsername">{post.userId}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
