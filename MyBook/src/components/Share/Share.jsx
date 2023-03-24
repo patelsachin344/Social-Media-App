@@ -22,7 +22,7 @@ export const Share = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newPost = {
-      userId: currentUser._id,
+      userId: currentUser.user?._id,
       desc: desc.current.value,
     };
     if (file) {
@@ -44,7 +44,6 @@ export const Share = () => {
     }
     if (desc.current.value || file) {
       dispatch(uploadPost(newPost));
-
       desc.current.value = null;
       setFile(null);
     } else {
@@ -59,14 +58,16 @@ export const Share = () => {
           <img
             className="shareProfileImg"
             src={
-              currentUser.profilePicture
-                ? currentUser.profilePicture
+              currentUser.user?.profilePicture
+                ? currentUser.user?.profilePicture
                 : PF + "person/images.png"
             }
             alt=""
           />
           <input
-            placeholder={"What's in your mind " + currentUser.username + "?"}
+            placeholder={
+              "What's in your mind " + currentUser.user?.username + "?"
+            }
             className="shareInput"
             ref={desc}
           />

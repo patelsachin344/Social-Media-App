@@ -47,11 +47,11 @@ export const Topbar = () => {
           </div>
         </div>
 
-        <Link to={`/profile/${currentUser.username}`}>
+        <Link to={`/profile/${currentUser.user?.username}`}>
           <img
             src={
-              currentUser.profilePicture
-                ? currentUser.profilePicture
+              currentUser.user?.profilePicture
+                ? currentUser.user?.profilePicture
                 : PF + "person/images.png"
             }
             alt=""

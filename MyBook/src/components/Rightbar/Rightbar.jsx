@@ -16,7 +16,7 @@ export const Rightbar = ({ user }) => {
   const { friends } = useSelector((state) => state.friends);
   const dispather = useDispatch();
   const [follow, setFollow] = useState(
-    currentUser?.followings?.includes(user?._id)
+    currentUser.user?.followings?.includes(user?._id)
   );
   useEffect(() => {
     if (user) {
@@ -24,18 +24,18 @@ export const Rightbar = ({ user }) => {
     }
   }, [user]);
   useEffect(() => {
-    setFollow(currentUser?.followings?.includes(user?._id));
-  }, [currentUser, user]);
+    setFollow(currentUser.user?.followings?.includes(user?._id));
+  }, [currentUser?.user, user]);
   // console.log(currentUser.followings.includes(user?._id));
   const handleFollow = async () => {
     if (follow) {
       await axios.put(`http://localhost:8080/users/${user._id}/unfollow`, {
-        userId: currentUser._id,
+        userId: currentUser.user?._id,
       });
       dispatch({ type: "UnFollowSuccess", payload: user._id });
     } else {
       await axios.put(`http://localhost:8080/users/${user._id}/follow`, {
-        userId: currentUser._id,
+        userId: currentUser.user?._id,
       });
       dispatch({ type: "followSuccess", payload: user._id });
     }
@@ -65,7 +65,7 @@ export const Rightbar = ({ user }) => {
   const ProfileRightbar = () => {
     return (
       <>
-        {user.username !== currentUser.username && (
+        {user.username !== currentUser.user?.username && (
           <button className="rightbarFollowIcon" onClick={handleFollow}>
             {follow ? "Unfollow" : "Follow"}
             {follow ? <Remove /> : <Add />}
@@ -97,7 +97,7 @@ export const Rightbar = ({ user }) => {
           {friends &&
             friends.map((friend) => (
               <Link
-                to={"/profile/" + friend.username}
+                to={"/friendsprofile/" + friend.username}
                 style={{ textDecoration: "none" }}
               >
                 <div className="rightbarFollowing">

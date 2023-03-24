@@ -1,31 +1,32 @@
 import "./Login.css";
 
-import React, { useContext, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "../../context/AuthContextt";
 import { getLoginUser } from "../../context/AuthAction";
 import { CircularProgress } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/Login/action";
+import { logedinUser, loginUser } from "../../redux/Login/action";
 
 export const Login = () => {
   const email = useRef();
   const password = useRef();
-  const dispatcher = useDispatch();
-  const { user, isLoading, error, dispatch } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { currentUser, loading } = useSelector((state) => state.user);
+  console.log(currentUser, "currentUser");
+  console.log(loading, "loading");
   const handlesubmin = (e) => {
     e.preventDefault();
     console.log(email.current.value, password.current.value);
-    getLoginUser(
-      { email: email.current.value, password: password.current.value },
-      dispatch
-    );
-    dispatcher(
+    dispatch(
       loginUser({
         email: email.current.value,
         password: password.current.value,
       })
     );
   };
+  useEffect(() => {
+    dispatch(logedinUser());
+  }, [loading]);
 
   return (
     <div className="login">
@@ -54,11 +55,11 @@ export const Login = () => {
               className="loginInput"
             />
             <button className="loginButton">
-              {isLoading ? <CircularProgress size="30px" /> : "Log In"}
+              {loading ? <CircularProgress size="30px" /> : "Log In"}
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button className="loginRegisterButton">
-              {isLoading ? <CircularProgress /> : "Create a New Account"}
+              {loading ? <CircularProgress /> : "Create a New Account"}
             </button>
           </form>
         </div>

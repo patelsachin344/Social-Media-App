@@ -10,6 +10,9 @@ export const SIGNUPFAIL = "SIGNUPFAIL";
 export const SIGNUPLOAD = "SIGNUPLOAD";
 
 export const GETSINGLEUSER = "GETSINGLEUSER";
+export const GETSINGLEUSERBYUSERNAME = "GETSINGLEUSERBYUSERNAME";
+
+export const UPLOADUSERIMG = "UPLOADUSERIMG";
 
 export const login_success = (data) => {
   return {
@@ -51,6 +54,19 @@ export const get_singleUser = (data) => {
   };
 };
 
+export const get_singleUserbyUsername = (data) => {
+  return {
+    type: GETSINGLEUSERBYUSERNAME,
+    payload: data,
+  };
+};
+export const upload_userImg = (data) => {
+  return {
+    type: UPLOADUSERIMG,
+    payload: data,
+  };
+};
+
 export const signupUser = (user) => async (dispatch) => {
   //   const navigate = useNavigate();
 
@@ -69,17 +85,56 @@ export const loginUser = (user) => async (dispatch) => {
   dispatch(login_load());
   try {
     const res = await axios.post("http://localhost:8080/auth/login", user);
-    // console.log(res.data.user, "response from action redux");
-    dispatch(login_success(res.data.user));
+    console.log(res.data, "response from action redux");
+    localStorage.setItem("userToken", res.data?.token);
+    // dispatch(login_success(res.data.user));
   } catch (error) {
     dispatch(login_fail());
+  }
+};
+
+export const logedinUser = () => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    console.log(token);
+    if (token) {
+      const res = await axios.get("http://localhost:8080/auth/logedin", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      dispatch(login_success(res.data));
+    }
+  } catch (error) {
+    dispatch(login_fail());
+  }
+};
+
+export const uploadUserImg = (userId, data) => async (dispatch) => {
+  try {
+    await axios.put(`http://localhost:8080/users/${userId}`, data);
+    dispatch(upload_userImg());
+  } catch (error) {
+    console.log(error);
   }
 };
 
 export const getSingleUser = (userId) => async (dispatch) => {
   try {
     const res = await axios.get(`http://localhost:8080/users?userId=${userId}`);
+
     dispatch(get_singleUser(res.data));
+  } catch (error) {
+    dispatch(login_fail());
+  }
+};
+
+export const getSingleUserbyusername = (username) => async (dispatch) => {
+  try {
+    const res = await axios.get(
+      `http://localhost:8080/users?username=${username}`
+    );
+    dispatch(get_singleUserbyUsername(res.data));
   } catch (error) {
     dispatch(login_fail());
   }

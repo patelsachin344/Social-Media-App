@@ -5,8 +5,8 @@ const postSchema = new mongoose.Schema(
     userId: { type: String, required: true },
     // userData: {
     //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "User",
-    //   required: true,
+    //   ref: "users",
+    //   // required: true,
     // },
     desc: { type: String, max: 500 },
     image: { type: String },

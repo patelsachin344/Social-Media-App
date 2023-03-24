@@ -5,16 +5,17 @@ const User = require("../model/user.model");
 // updata the user credentials
 
 router.put("/:id", async (req, res) => {
+  console.log(req.params.id, req.body.userId);
   if (req.params.id === req.body.userId || req.body.admin) {
-    if (req.body.password) {
-      try {
-        const salt = await bcrypt.genSalt(10);
-        const hashpassword = await bcrypt.hash(req.body.password, salt);
-        req.body.password = hashpassword;
-      } catch (error) {
-        res.status(500).json({ error: error.message });
-      }
-    }
+    // if (req.body.password) {
+    //   try {
+    //     const salt = await bcrypt.genSalt(10);
+    //     const hashpassword = await bcrypt.hash(req.body.password, salt);
+    //     req.body.password = hashpassword;
+    //   } catch (error) {
+    //     res.status(500).json({ error: error.message });
+    //   }
+    // }
 
     try {
       await User.findByIdAndUpdate(req.params.id, {
@@ -33,15 +34,15 @@ router.put("/:id", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
   if (req.params.id === req.body.userId || req.body.admin) {
-    // if (req.body.password) {
-    //   try {
-    //     const salt = await bcrypt.genSalt(10);
-    //     const hashpassword = await bcrypt.hash(req.body.password, salt);
-    //     req.body.password = hashpassword;
-    //   } catch (error) {
-    //     res.status(500).json({ error: error.message });
-    //   }
-    // }
+    if (req.body.password) {
+      try {
+        const salt = await bcrypt.genSalt(10);
+        const hashpassword = await bcrypt.hash(req.body.password, salt);
+        req.body.password = hashpassword;
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    }
 
     try {
       await User.findByIdAndDelete(req.params.id, {

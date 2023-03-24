@@ -2,7 +2,7 @@ const User = require("../model/user.model");
 
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
-
+const jwt = require("jsonwebtoken");
 // register users
 
 router.post("/register", async (req, res) => {
@@ -30,20 +30,46 @@ router.post("/register", async (req, res) => {
   // }
 });
 
+const genrateToken = (user) => {
+  if (user.password) {
+    delete user.password;
+  }
+  const token = jwt.sign(user, "This is social auth token");
+  return token;
+};
+
 router.post("/login", async (req, res) => {
   try {
     let { email, password } = req.body;
 
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     const unhashpassword = await bcrypt.compare(password, user.password);
-    if (!unhashpassword)
+    if (!unhashpassword) {
       return res.status(400).json({ message: "Password is incorrect" });
-
-    res.status(200).json({ user });
+    }
+    const token = genrateToken(user.toJSON());
+    res.status(200).json({ token });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/logedin", async (req, res) => {
+  const authorization = req.headers.authorization;
+  if (authorization) {
+    try {
+      const token = authorization.split(" ")[1];
+      const user = jwt.verify(token, "This is social auth token");
+      res.send({ user });
+    } catch (error) {
+      res.json({ error: error.message });
+    }
+  } else {
+    res.json("Please Provide a Authorization for login");
   }
 });
 

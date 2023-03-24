@@ -1,10 +1,9 @@
 import "./Register.css";
 
-import React, { useRef } from "react";
-import axios from "axios";
+import React, { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { signupUser } from "../../redux/Login/action";
+import { logedinUser, signupUser } from "../../redux/Login/action";
 
 export const Register = () => {
   const username = useRef();
@@ -29,6 +28,10 @@ export const Register = () => {
       navigate("/login");
     }
   };
+
+  useEffect(() => {
+    dispatch(logedinUser());
+  }, []);
   return (
     <div className="login">
       <div className="loginWrapper">

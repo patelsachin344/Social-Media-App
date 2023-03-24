@@ -20,13 +20,13 @@ export const Post = ({ post }) => {
     dispatch(getSingleUser(post.userId));
   }, [post.userId]);
   useEffect(() => {
-    setIsLiked(post.likes.includes(currentUser._id));
-  }, [currentUser._id, post.like]);
+    setIsLiked(post.likes.includes(currentUser.user?._id));
+  }, [currentUser?.user?._id, post.like]);
 
   const likeHandler = () => {
     try {
       axios.put(`http://localhost:8080/post/${post._id}/like`, {
-        userId: currentUser._id,
+        userId: currentUser.user?._id,
       });
     } catch (error) {}
     setLike(isLiked ? like - 1 : like + 1);
@@ -38,7 +38,7 @@ export const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`profile/${getUser.username}`}>
+            <Link to={`friendsprofile/${getUser.username}`}>
               <img
                 className="postProfileImg"
                 src={
@@ -49,8 +49,8 @@ export const Post = ({ post }) => {
                 alt=""
               />
             </Link>
-            {/* <span className="postUsername">{getUser.username}</span> */}
-            <span className="postUsername">{post.userId}</span>
+            {}
+            <span className="postUsername">{getUser.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">

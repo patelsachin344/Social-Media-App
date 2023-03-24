@@ -1,16 +1,19 @@
 import {
   GETSINGLEUSER,
+  GETSINGLEUSERBYUSERNAME,
   LOGINFAIL,
   LOGINLOAD,
   LOGINSUCCESS,
   SIGNUPFAIL,
   SIGNUPLOAD,
   SIGNUPSUCCESS,
+  UPLOADUSERIMG,
 } from "./action";
 
 const initialState = {
   currentUser: {},
   getUser: {},
+  getUserByUsername: {},
   loading: false,
   error: false,
 };
@@ -18,7 +21,7 @@ const initialState = {
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGINSUCCESS: {
-      return { ...state, currentUser: action.payload };
+      return { ...state, currentUser: action.payload, loading: false };
     }
     case LOGINFAIL: {
       return { ...state, error: true };
@@ -37,6 +40,12 @@ export const userReducer = (state = initialState, action) => {
     }
     case GETSINGLEUSER: {
       return { ...state, getUser: action.payload };
+    }
+    case GETSINGLEUSERBYUSERNAME: {
+      return { ...state, getUserByUsername: action.payload };
+    }
+    case UPLOADUSERIMG: {
+      return state;
     }
     default: {
       return state;

@@ -13,16 +13,16 @@ export const Feed = ({ username }) => {
   // console.log(posts, "from feed");
 
   useEffect(() => {
-    dispatch(getPost(username, currentUser._id));
+    dispatch(getPost(username, currentUser.user?._id));
   }, []);
 
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {(!username || username === currentUser.username) && <Share />}
+        {(!username || username === currentUser.user?.username) && <Share />}
 
-        {posts.map((ele) => (
-          <Post key={ele._id} post={ele} />
+        {posts.map((post) => (
+          <Post key={post._id} post={post} />
         ))}
       </div>
     </div>
