@@ -38,19 +38,19 @@ export const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`friendsprofile/${getUser.username}`}>
+            <Link to={`friendsprofile/${post?.userId?.username}`}>
               <img
                 className="postProfileImg"
                 src={
-                  getUser.profilePicture
-                    ? getUser.profilePicture
+                  post?.userId?.profilePicture
+                    ? post?.userId?.profilePicture
                     : PF + "person/images.png"
                 }
                 alt=""
               />
             </Link>
             {}
-            <span className="postUsername">{getUser.username}</span>
+            <span className="postUsername">{post?.userId?.username}</span>
             <span className="postDate">{format(post.createdAt)}</span>
           </div>
           <div className="postTopRight">
@@ -59,7 +59,7 @@ export const Post = ({ post }) => {
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={post.image} alt="" />
+          <img className="postImg" src={post?.image} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">
@@ -79,7 +79,7 @@ export const Post = ({ post }) => {
             <span className="postLikeCounter">{like} people like it</span>
           </div>
           <div className="postBottomRight">
-            <span className="postCommentText">{post.comment} comments</span>
+            <span className="postCommentText">{post?.comment} comments</span>
           </div>
         </div>
       </div>

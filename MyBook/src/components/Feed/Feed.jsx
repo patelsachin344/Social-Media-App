@@ -4,22 +4,25 @@ import { Share } from "../Share/Share";
 import "./Feed.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getPost } from "../../redux/Post/action";
+import { useParams } from "react-router-dom";
 
-export const Feed = ({ username }) => {
+export const Feed = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { posts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-
-  // console.log(posts, "from feed");
-
+  const { currentUsername } = useParams();
   useEffect(() => {
-    dispatch(getPost(username, currentUser.user?._id));
+    dispatch(getPost(currentUsername, currentUser.user?._id));
   }, []);
-
+  console.log(
+    currentUsername,
+    currentUser.user?.username,
+    "from feed username"
+  );
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {(!username || username === currentUser.user?.username) && <Share />}
+        {currentUsername === currentUser.user?.username && <Share />}
 
         {posts.map((post) => (
           <Post key={post._id} post={post} />

@@ -19,59 +19,11 @@ export const FriendsProfile = () => {
   const [profileFile, setProfileFile] = useState(null);
   const [coverFile, setCoverFile] = useState(null);
   const { currentUser, getUserByUsername } = useSelector((state) => state.user);
-  const { username } = useParams();
+  const { friendUsername } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(getSingleUserbyusername(username));
-  }, [username]);
-
-  // const uploadImg = {
-  //   userId: currentUser?.user?._id,
-  // };
-
-  // useEffect(()=> {
-
-  // },[uploadImg])
-  // const handleUpload = async () => {
-  //   if (profileFile) {
-  //     const data = new FormData();
-  //     data.append("file", profileFile);
-  //     data.append("upload_preset", "mybookimg");
-  //     data.append("cloud_name", "deje6buuz");
-
-  //     try {
-  //       const res = await axios.post(
-  //         "https://api.cloudinary.com/v1_1/deje6buuz/image/upload",
-  //         data
-  //       );
-  //       // console.log(res.data.url);
-  //       uploadImg.profilePicture = res.data.url;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   } else if (coverFile) {
-  //     const data = new FormData();
-  //     data.append("file", coverFile);
-  //     data.append("upload_preset", "mybookimg");
-  //     data.append("cloud_name", "deje6buuz");
-
-  //     try {
-  //       const res = await axios.post(
-  //         "https://api.cloudinary.com/v1_1/deje6buuz/image/upload",
-  //         data
-  //       );
-  //       // console.log(res.data.url);
-  //       uploadImg.coverPicture = res.data.url;
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   if (profileFile || coverFile) {
-  //     dispatch(uploadUserImg(currentUser?.user?._id, uploadImg));
-  //     setProfileFile(null);
-  //     setCoverFile(null);
-  //   }
-  // };
+    dispatch(getSingleUserbyusername(friendUsername));
+  }, [friendUsername]);
 
   return (
     <div>
@@ -91,13 +43,6 @@ export const FriendsProfile = () => {
                   }
                   alt=""
                 />
-                {/* <input
-                  type="file"
-                  id="coverFile"
-                  accept=".png,.jpeg,.jpg"
-                  onChange={(e) => setCoverFile(e.target.files[0])}
-                  style={{ display: "none" }}
-                /> */}
               </label>
               <label htmlFor="profileFile">
                 <img
@@ -109,43 +54,7 @@ export const FriendsProfile = () => {
                   }
                   alt=""
                 />
-                {/* <input
-                  type="file"
-                  id="profileFile"
-                  accept=".png,.jpeg,.jpg"
-                  onChange={(e) => setProfileFile(e.target.files[0])}
-                  style={{ display: "none" }}
-                /> */}
               </label>
-              {/* {profileFile && (
-                <div className="uploadProfileImgContainer">
-                  <img
-                    src={URL.createObjectURL(profileFile)}
-                    alt=""
-                    className="uploadProfileImg"
-                  />
-                  <Cancel
-                    className="uploadProfilecancelImg"
-                    onClick={() => setProfileFile(null)}
-                  />
-                  <CloudUpload onClick={handleUpload} />
-                </div>
-              )}
-
-              {coverFile && (
-                <div className="uploadCoverImgContainer">
-                  <img
-                    src={URL.createObjectURL(coverFile)}
-                    alt=""
-                    className="uploadCoverImg"
-                  />
-                  <Cancel
-                    className="uploadCovercancelImg"
-                    onClick={() => setCoverFile(null)}
-                  />
-                  <CloudUpload onClick={handleUpload} />
-                </div>
-              )} */}
             </div>
             <div className="profileInfo">
               <h4 className="profileInfoName">{getUserByUsername.username}</h4>
@@ -153,7 +62,7 @@ export const FriendsProfile = () => {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed username={username} />
+            <Feed username={friendUsername} />
             <Rightbar user={getUserByUsername} />
           </div>
         </div>
