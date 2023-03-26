@@ -1,9 +1,10 @@
 import {
-  GETSINGLEUSER,
+  GETCURRENTUSER,
   GETSINGLEUSERBYUSERNAME,
   LOGINFAIL,
   LOGINLOAD,
   LOGINSUCCESS,
+  LOGINTRUE,
   SIGNUPFAIL,
   SIGNUPLOAD,
   SIGNUPSUCCESS,
@@ -12,6 +13,7 @@ import {
 
 const initialState = {
   currentUser: {},
+  logedinUserId: {},
   getUser: {},
   getUserByUsername: {},
   loading: false,
@@ -21,7 +23,13 @@ const initialState = {
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGINSUCCESS: {
-      return { ...state, currentUser: action.payload, loading: false };
+      return { ...state, logedinUserId: action.payload };
+    }
+    case GETCURRENTUSER: {
+      return { ...state, currentUser: action.payload };
+    }
+    case LOGINTRUE: {
+      return state;
     }
     case LOGINFAIL: {
       return { ...state, error: true };
@@ -38,9 +46,7 @@ export const userReducer = (state = initialState, action) => {
     case SIGNUPLOAD: {
       return { ...state, loading: true };
     }
-    case GETSINGLEUSER: {
-      return { ...state, getUser: action.payload };
-    }
+
     case GETSINGLEUSERBYUSERNAME: {
       return { ...state, getUserByUsername: action.payload };
     }

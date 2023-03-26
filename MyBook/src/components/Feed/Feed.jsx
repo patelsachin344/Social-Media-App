@@ -10,19 +10,22 @@ export const Feed = () => {
   const { currentUser } = useSelector((state) => state.user);
   const { posts } = useSelector((state) => state.post);
   const dispatch = useDispatch();
-  const { currentUsername } = useParams();
+  const { currentUsername, friendUsername } = useParams();
+
   useEffect(() => {
-    dispatch(getPost(currentUsername, currentUser.user?._id));
+    dispatch(
+      getPost(
+        currentUsername ? currentUsername : friendUsername,
+        currentUser?._id
+      )
+    );
   }, []);
-  console.log(
-    currentUsername,
-    currentUser.user?.username,
-    "from feed username"
-  );
+
   return (
     <div className="feed">
       <div className="feedWrapper">
-        {currentUsername === currentUser.user?.username && <Share />}
+        {((!currentUsername && !friendUsername) ||
+          currentUsername === currentUser?.username) && <Share />}
 
         {posts.map((post) => (
           <Post key={post._id} post={post} />

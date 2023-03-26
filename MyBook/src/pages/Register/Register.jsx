@@ -1,9 +1,9 @@
 import "./Register.css";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logedinUser, signupUser } from "../../redux/Login/action";
+import { signupUser } from "../../redux/Login/action";
 
 export const Register = () => {
   const username = useRef();
@@ -29,33 +29,30 @@ export const Register = () => {
     }
   };
 
-  useEffect(() => {
-    dispatch(logedinUser());
-  }, []);
   return (
-    <div className="login">
-      <div className="loginWrapper">
-        <div className="loginLeft">
-          <h3 className="loginLogo">MyBook</h3>
-          <span className="loginDesc">
+    <div className="register">
+      <div className="registerWrapper">
+        <div className="registerLeft">
+          <h3 className="registerLogo">MyBook</h3>
+          <span className="registerDesc">
             Connect with friends and the world around you on MyBook.
           </span>
         </div>
-        <div className="loginRight">
-          <form className="loginBox" onSubmit={handleChange}>
+        <div className="registerRight">
+          <form className="registerBox" onSubmit={handleChange}>
             <input
               placeholder="Username"
               required
               ref={username}
               type="text"
-              className="loginInput"
+              className="registerInput"
             />
             <input
               placeholder="Email"
               required
               ref={email}
               type="email"
-              className="loginInput"
+              className="registerInput"
             />
             <input
               placeholder="Password"
@@ -63,7 +60,7 @@ export const Register = () => {
               ref={password}
               minLength="6"
               type="password"
-              className="loginInput"
+              className="registerInput"
             />
             <input
               placeholder="Password Again"
@@ -71,14 +68,12 @@ export const Register = () => {
               ref={passwordAgain}
               minLength="6"
               type="password"
-              className="loginInput"
+              className="registerInput"
             />
-            <button className="loginButton">Sign Up</button>
-            {/* <Link to={"/login"}>
-              <button className="loginRegisterButton">Log into Account</button>
-            </Link> */}
-
-            <button className="loginRegisterButton">Log into Account</button>
+            <button className="registerButton">Sign Up</button>
+            <Link to={"/login"}>
+              <button className="registerRegisterButton">Log in</button>
+            </Link>
           </form>
         </div>
       </div>

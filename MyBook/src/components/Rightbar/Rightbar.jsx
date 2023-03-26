@@ -11,33 +11,31 @@ import "./Rightbar.css";
 
 export const Rightbar = ({ user }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const { dispatch } = useContext(AuthContext);
   const { currentUser } = useSelector((state) => state.user);
   const { friends } = useSelector((state) => state.friends);
-  const dispather = useDispatch();
+  const dispatch = useDispatch();
   const [follow, setFollow] = useState(
-    currentUser.user?.followings?.includes(user?._id)
+    currentUser?.followings?.includes(user?._id)
   );
+  // console.log(currentUser.user);
   useEffect(() => {
     if (user) {
-      dispather(getFriends(user._id));
+      dispatch(getFriends(user._id));
     }
-  }, [user]);
+  }, [user?._id]);
   useEffect(() => {
-    setFollow(currentUser.user?.followings?.includes(user?._id));
-  }, [currentUser?.user, user]);
-  // console.log(currentUser.followings.includes(user?._id));
+    setFollow(currentUser?.followings?.includes(user?._id));
+  }, [currentUser, user]);
+  console.log(currentUser?.followings?.includes(user?._id));
   const handleFollow = async () => {
     if (follow) {
       await axios.put(`http://localhost:8080/users/${user._id}/unfollow`, {
-        userId: currentUser.user?._id,
+        userId: currentUser?._id,
       });
-      dispatch({ type: "UnFollowSuccess", payload: user._id });
     } else {
       await axios.put(`http://localhost:8080/users/${user._id}/follow`, {
-        userId: currentUser.user?._id,
+        userId: currentUser?._id,
       });
-      dispatch({ type: "followSuccess", payload: user._id });
     }
     setFollow(!follow);
   };
@@ -48,7 +46,7 @@ export const Rightbar = ({ user }) => {
         <div className="birthdayContainer">
           <img className="birthdayImg" src={`${PF}gift.png`} alt="" />
           <span className="birthdayText">
-            <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
+            <b>Sachin</b> and <b>3 other friends</b> have a birhday today.
           </span>
         </div>
         <img className="rightbarAd" src={`${PF}ad.png`} alt="" />
@@ -65,13 +63,13 @@ export const Rightbar = ({ user }) => {
   const ProfileRightbar = () => {
     return (
       <>
-        {user.username !== currentUser.user?.username && (
+        {user.username !== currentUser?.username && (
           <button className="rightbarFollowIcon" onClick={handleFollow}>
             {follow ? "Unfollow" : "Follow"}
             {follow ? <Remove /> : <Add />}
           </button>
         )}
-        <h4 className="rightbarTitle">User information</h4>
+        <h4 className="rightbarTitle">User's information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">
             <span className="rightbarInfoKey">City:</span>
@@ -92,7 +90,7 @@ export const Rightbar = ({ user }) => {
             </span>
           </div>
         </div>
-        <h4 className="rightbarTitle">User friends</h4>
+        <h4 className="rightbarTitle">User's friends</h4>
         <div className="rightbarFollowings">
           {friends &&
             friends.map((friend) => (

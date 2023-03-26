@@ -18,7 +18,7 @@ export const Profile = () => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [profileFile, setProfileFile] = useState(null);
   const [coverFile, setCoverFile] = useState(null);
-  const { currentUser, getUserByUsername } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const { username } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
@@ -26,12 +26,9 @@ export const Profile = () => {
   }, [username]);
 
   const uploadImg = {
-    userId: currentUser?.user?._id,
+    userId: currentUser?._id,
   };
 
-  // useEffect(()=> {
-
-  // },[uploadImg])
   const handleUpload = async () => {
     if (profileFile) {
       const data = new FormData();
@@ -67,7 +64,7 @@ export const Profile = () => {
       }
     }
     if (profileFile || coverFile) {
-      dispatch(uploadUserImg(currentUser?.user?._id, uploadImg));
+      dispatch(uploadUserImg(currentUser?._id, uploadImg));
       setProfileFile(null);
       setCoverFile(null);
     }
@@ -85,8 +82,8 @@ export const Profile = () => {
                 <img
                   className="profileCoverImg"
                   src={
-                    currentUser.user?.coverPicture
-                      ? currentUser.user?.coverPicture
+                    currentUser?.coverPicture
+                      ? currentUser?.coverPicture
                       : PF + "/person/noCover.jpeg"
                   }
                   alt=""
@@ -103,8 +100,8 @@ export const Profile = () => {
                 <img
                   className="profileUserImg"
                   src={
-                    currentUser.user?.profilePicture
-                      ? currentUser.user?.profilePicture
+                    currentUser?.profilePicture
+                      ? currentUser?.profilePicture
                       : PF + "/person/images.png"
                   }
                   alt=""
@@ -148,13 +145,13 @@ export const Profile = () => {
               )}
             </div>
             <div className="profileInfo">
-              <h4 className="profileInfoName">{currentUser?.user?.username}</h4>
-              <span className="profileInfoDesc">{currentUser?.user?.desc}</span>
+              <h4 className="profileInfoName">{currentUser?.username}</h4>
+              <span className="profileInfoDesc">{currentUser?.desc}</span>
             </div>
           </div>
           <div className="profileRightBottom">
             <Feed username={username} />
-            <Rightbar user={currentUser?.user} />
+            <Rightbar user={currentUser} />
           </div>
         </div>
       </div>

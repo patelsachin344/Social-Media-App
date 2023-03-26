@@ -51,6 +51,7 @@ router.post("/login", async (req, res) => {
     if (!unhashpassword) {
       return res.status(400).json({ message: "Password is incorrect" });
     }
+    console.log(user);
     const token = genrateToken(user.toJSON());
     res.status(200).json({ token });
   } catch (error) {
@@ -64,6 +65,7 @@ router.get("/logedin", async (req, res) => {
     try {
       const token = authorization.split(" ")[1];
       const user = jwt.verify(token, "This is social auth token");
+      console.log(user);
       res.send({ user });
     } catch (error) {
       res.json({ error: error.message });

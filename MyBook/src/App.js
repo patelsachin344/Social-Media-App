@@ -1,40 +1,52 @@
-import { useContext } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import { AuthContext } from "./context/AuthContextt";
+
 import { FriendsProfile } from "./pages/FriendsProfile/FriendsProfile";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { Profile } from "./pages/Profile/Profile";
 import { Register } from "./pages/Register/Register";
+import { getCurrentUser, logedinUser } from "./redux/Login/action";
 
 function App() {
-  const { currentUser } = useSelector((state) => state.user);
-  console.log(currentUser);
+  const { currentUser, logedinUserId } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  console.log(currentUser, "from app");
+  console.log(logedinUserId?.user?._id, "from app");
   console.log(currentUser.user ? "true" : "false");
+
+  useEffect(() => {
+    dispatch(logedinUser());
+    dispatch(getCurrentUser(logedinUserId.user?._id));
+  }, []);
+  useEffect(() => {
+    dispatch(getCurrentUser(logedinUserId.user?._id));
+  }, [logedinUserId]);
+
   return (
     <Routes>
       <Route
         exact
         path="/"
-        element={currentUser.user ? <Home /> : <Register />}
+        element={currentUser.username ? <Home /> : <Login />}
       ></Route>
       <Route
         path="/login"
-        element={currentUser.user ? <Navigate to="/" /> : <Login />}
+        element={currentUser.username ? <Navigate to="/" /> : <Login />}
       ></Route>
       <Route
         path="/register"
-        element={currentUser.user ? <Navigate to="/" /> : <Register />}
+        element={currentUser.username ? <Navigate to="/" /> : <Register />}
       ></Route>
       <Route
         path="/profile/:currentUsername"
-        element={currentUser.user ? <Profile /> : <Navigate to="/register" />}
+        element={currentUser.username ? <Profile /> : <Navigate to="/login" />}
       ></Route>
       <Route
         path="/friendsprofile/:friendUsername"
         element={
-          currentUser.user ? <FriendsProfile /> : <Navigate to="/register" />
+          currentUser.username ? <FriendsProfile /> : <Navigate to="/login" />
         }
       ></Route>
     </Routes>

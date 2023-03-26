@@ -7,26 +7,23 @@ import { useState } from "react";
 import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getSingleUser } from "../../redux/Login/action";
 
 export const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-  const { currentUser, getUser } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(getSingleUser(post.userId));
-  }, [post.userId]);
-  useEffect(() => {
-    setIsLiked(post.likes.includes(currentUser.user?._id));
-  }, [currentUser?.user?._id, post.like]);
+    setIsLiked(post.likes.includes(currentUser?._id));
+  }, [currentUser?._id, post.like]);
 
   const likeHandler = () => {
     try {
       axios.put(`http://localhost:8080/post/${post._id}/like`, {
-        userId: currentUser.user?._id,
+        userId: currentUser?._id,
       });
     } catch (error) {}
     setLike(isLiked ? like - 1 : like + 1);
