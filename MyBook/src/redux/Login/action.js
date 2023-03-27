@@ -102,7 +102,7 @@ export const loginUser = (user) => async (dispatch) => {
 export const logedinUser = () => async (dispatch) => {
   try {
     const token = localStorage.getItem("userToken");
-    // console.log(token);
+    console.log(token, "token");
     if (token) {
       const res = await axios.get("http://localhost:8080/auth/logedin", {
         headers: {

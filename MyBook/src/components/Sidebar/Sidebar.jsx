@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Sidebar.css";
 import {
   RssFeed,
@@ -13,7 +13,17 @@ import {
 } from "@material-ui/icons";
 import { Users } from "../../DummyData";
 import { CloseFriend } from "../CloseFriend/CloseFriend";
+import { useDispatch } from "react-redux";
+import { logedinUser } from "../../redux/Login/action";
 export const Sidebar = () => {
+  const [logout, setLogout] = useState(false);
+  console.log(logout);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    localStorage.clear("userToken");
+    dispatch(logedinUser());
+    setLogout(!logout);
+  };
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -53,6 +63,15 @@ export const Sidebar = () => {
           <li className="sidebarListItem">
             <School className="sidebarIcon" />
             <span className="sidebarListItemText">Courses</span>
+          </li>
+          <li className="sidebarListItem">
+            <School className="sidebarIcon" />
+            <span
+              className="sidebarListItemText"
+              onClick={() => handleLogout()}
+            >
+              Log Out
+            </span>
           </li>
         </ul>
         <button className="sidebarButton">Show More</button>

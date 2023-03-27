@@ -27,13 +27,13 @@ export const postReducer = (state = initialState, action) => {
       return { ...state, postLoad: true };
     }
     case UPLOADSUCCESS: {
-      return state;
+      return { ...state, uploadFail: false, uploading: false };
     }
     case UPLOADFAIL: {
-      return { ...state, uploadFail: true };
+      return { ...state, uploadFail: true, uploading: false };
     }
     case UPLOADING: {
-      return { ...state, uploading: true };
+      return { ...state, uploading: true, uploadFail: false };
     }
     default:
       return state;

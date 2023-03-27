@@ -28,19 +28,19 @@ export const post_load = () => {
 
 export const upload_success = (data) => {
   return {
-    type: POSTFAIL,
+    type: UPLOADSUCCESS,
     payload: data,
   };
 };
 export const upload_fail = (data) => {
   return {
-    type: POSTFAIL,
+    type: UPLOADFAIL,
     payload: data,
   };
 };
 export const upload_load = () => {
   return {
-    type: POSTFAIL,
+    type: UPLOADING,
   };
 };
 
@@ -64,12 +64,12 @@ export const getPost = (username, currentUserId) => async (dispatch) => {
   }
 };
 
-export const uploadPost = (newPost) => (dispatch) => {
+export const uploadPost = (newPost, currentUser) => (dispatch) => {
   dispatch(upload_load());
   try {
     axios.post("http://localhost:8080/post", newPost);
     dispatch(upload_success());
-    dispatch(getPost());
+    dispatch(getPost(null, currentUser));
   } catch (error) {
     dispatch(upload_fail(error));
   }

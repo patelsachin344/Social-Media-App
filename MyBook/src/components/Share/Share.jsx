@@ -13,8 +13,10 @@ import { uploadPost } from "../../redux/Post/action";
 export const Share = () => {
   const [file, setFile] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
+  const { uploading } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   // console.log(currentUser, "response from login ,action redux");
+  console.log(uploading, "uploading");
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
@@ -43,7 +45,7 @@ export const Share = () => {
       }
     }
     if (desc.current.value || file) {
-      dispatch(uploadPost(newPost));
+      dispatch(uploadPost(newPost, currentUser?._id));
       desc.current.value = null;
       setFile(null);
     } else {
