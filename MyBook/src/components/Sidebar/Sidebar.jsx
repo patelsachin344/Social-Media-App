@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Sidebar.css";
 import {
   RssFeed,
@@ -11,13 +11,20 @@ import {
   Event,
   School,
 } from "@material-ui/icons";
-import { Users } from "../../DummyData";
+
 import { CloseFriend } from "../CloseFriend/CloseFriend";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logedinUser } from "../../redux/Login/action";
+import { get_All_Users } from "../../redux/Friends/action";
+
 export const Sidebar = () => {
+  const { friends, getAllUsers } = useSelector((state) => state.friends);
+  console.log(getAllUsers);
+  useEffect(() => {
+    dispatch(get_All_Users());
+  }, []);
+
   const [logout, setLogout] = useState(false);
-  console.log(logout);
   const dispatch = useDispatch();
   const handleLogout = () => {
     localStorage.clear("userToken");
@@ -77,9 +84,11 @@ export const Sidebar = () => {
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
         <ul className="sidebarFriendList">
-          {Users.map((u) => (
-            <CloseFriend key={u.id} user={u} />
-          ))}
+          Show All Users
+          {getAllUsers &&
+            getAllUsers.map((friend) => (
+              <CloseFriend key={friend.username} friend={friend} />
+            ))}
         </ul>
       </div>
     </div>

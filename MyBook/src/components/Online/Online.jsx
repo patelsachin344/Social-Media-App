@@ -2,7 +2,7 @@ import "./Online.css";
 
 import React from "react";
 
-export const Online = ({ user }) => {
+export const Online = ({ friend }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
@@ -10,12 +10,16 @@ export const Online = ({ user }) => {
       <div className="rightbarProfileImgContainer">
         <img
           className="rightbarProfileImg"
-          src={PF + user.profilePicture}
+          src={
+            friend.profilePicture
+              ? friend.profilePicture
+              : PF + "person/images.png"
+          }
           alt=""
         />
         <span className="rightbarOnline"></span>
       </div>
-      <span className="rightbarUsername">{user.username}</span>
+      <span className="rightbarUsername">{friend.username}</span>
     </li>
   );
 };

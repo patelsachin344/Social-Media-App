@@ -26,7 +26,7 @@ export const Rightbar = ({ user }) => {
   useEffect(() => {
     setFollow(currentUser?.followings?.includes(user?._id));
   }, [currentUser, user]);
-  console.log(currentUser?.followings?.includes(user?._id));
+  // console.log(currentUser?.followings?.includes(user?._id));
   const handleFollow = async () => {
     if (follow) {
       await axios.put(`http://localhost:8080/users/${user._id}/unfollow`, {
@@ -52,9 +52,10 @@ export const Rightbar = ({ user }) => {
         <img className="rightbarAd" src={`${PF}ad.png`} alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {Users.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
+          {friends &&
+            friends.map((friend) => (
+              <Online key={friend.username} friend={friend} />
+            ))}
         </ul>
       </>
     );

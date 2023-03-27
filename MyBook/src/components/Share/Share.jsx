@@ -16,7 +16,7 @@ export const Share = () => {
   const { uploading } = useSelector((state) => state.post);
   const dispatch = useDispatch();
   // console.log(currentUser, "response from login ,action redux");
-  console.log(uploading, "uploading");
+  // console.log(uploading, "uploading");
 
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();

@@ -12,9 +12,9 @@ import { getCurrentUser, logedinUser } from "./redux/Login/action";
 function App() {
   const { currentUser, logedinUserId } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  console.log(currentUser, "from app");
-  console.log(logedinUserId?.user?._id, "from app");
-  console.log(currentUser.user ? "true" : "false");
+  // console.log(currentUser, "from app");
+  // console.log(logedinUserId?.user?._id, "from app");
+  // console.log(currentUser.user ? "true" : "false");
 
   useEffect(() => {
     dispatch(logedinUser());

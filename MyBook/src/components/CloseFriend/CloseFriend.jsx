@@ -1,14 +1,26 @@
 import "./CloseFriend.css";
 
 import React from "react";
+import { Link } from "react-router-dom";
 
-export const CloseFriend = ({ user }) => {
+export const CloseFriend = ({ friend }) => {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   return (
     <li className="sidebarFriend">
-      <img className="sidebarFriendImg" src={PF + user.profilePicture} alt="" />
-      <span className="sidebarFriendName">{user.username}</span>
+      <Link to={`friendsprofile/${friend?.username}`}>
+        <img
+          className="sidebarFriendImg"
+          src={
+            friend.profilePicture
+              ? friend.profilePicture
+              : PF + "person/images.png"
+          }
+          alt=""
+        />
+      </Link>
+
+      <span className="sidebarFriendName">{friend.username}</span>
     </li>
   );
 };

@@ -73,6 +73,24 @@ export const upload_userImg = (data) => {
   };
 };
 
+export const logedinUser = () => async (dispatch) => {
+  try {
+    const token = localStorage.getItem("userToken");
+    // console.log(token, "token");
+    if (token) {
+      const res = await axios.get("http://localhost:8080/auth/logedin", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
+      // console.log(res.data);
+      dispatch(login_success(res.data));
+    }
+  } catch (error) {
+    dispatch(login_fail());
+  }
+};
+
 export const signupUser = (user) => async (dispatch) => {
   //   const navigate = useNavigate();
 
@@ -94,24 +112,7 @@ export const loginUser = (user) => async (dispatch) => {
     // console.log(res.data, "response from action redux");
     localStorage.setItem("userToken", res.data?.token);
     dispatch(login_true());
-  } catch (error) {
-    dispatch(login_fail());
-  }
-};
-
-export const logedinUser = () => async (dispatch) => {
-  try {
-    const token = localStorage.getItem("userToken");
-    console.log(token, "token");
-    if (token) {
-      const res = await axios.get("http://localhost:8080/auth/logedin", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      });
-      // console.log(res.data);
-      dispatch(login_success(res.data));
-    }
+    dispatch(logedinUser());
   } catch (error) {
     dispatch(login_fail());
   }
@@ -131,6 +132,7 @@ export const uploadUserImg = (userId, data) => async (dispatch) => {
   try {
     await axios.put(`http://localhost:8080/users/${userId}`, data);
     dispatch(upload_userImg());
+    dispatch(getCurrentUser(userId));
   } catch (error) {
     console.log(error);
   }

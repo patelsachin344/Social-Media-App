@@ -1,5 +1,12 @@
 .rightbar {
   flex: 3.5;
+  height: calc(100vh - 50px);
+  overflow-y: scroll;
+  position: sticky;
+  top: 50px;
+}
+::-webkit-scrollbar {
+  display: none;
 }
 
 .rightbarWrapper {
