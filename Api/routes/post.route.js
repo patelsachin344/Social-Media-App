@@ -114,6 +114,7 @@ router.get("/timeline/:userId", async (req, res) => {
         return Post.find({ userId: friendsId }).populate("userId");
       })
     );
+
     res.status(200).json(userPosts.concat(...friendPosts));
   } catch (error) {
     res.status(500).json(error);
