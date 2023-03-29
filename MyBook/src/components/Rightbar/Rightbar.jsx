@@ -21,6 +21,8 @@ export const Rightbar = ({ user }) => {
   useEffect(() => {
     if (user) {
       dispatch(getFriends(user._id));
+    } else {
+      dispatch(getFriends(currentUser?._id));
     }
   }, [user?._id]);
   useEffect(() => {

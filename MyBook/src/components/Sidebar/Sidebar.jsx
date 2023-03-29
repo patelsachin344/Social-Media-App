@@ -19,7 +19,7 @@ import { get_All_Users } from "../../redux/Friends/action";
 
 export const Sidebar = () => {
   const { friends, getAllUsers } = useSelector((state) => state.friends);
-  console.log(getAllUsers);
+  // console.log(getAllUsers);
   useEffect(() => {
     dispatch(get_All_Users());
   }, []);
