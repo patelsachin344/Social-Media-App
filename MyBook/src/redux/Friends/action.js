@@ -1,4 +1,5 @@
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const FRIENDSUCCESS = "FRIENDSUCCESS";
 export const FRIENDFAIL = "FRIENDFAIL";
@@ -46,9 +47,7 @@ export const load_allUser = () => {
 export const getFriends = (userId) => async (dispatch) => {
   dispatch(friends_load());
   try {
-    const res = await axios.get(
-      `http://localhost:8080/users/friends/${userId}`
-    );
+    const res = await axios.get(`${baseUrl}/users/friends/${userId}`);
     dispatch(friends_success(res.data));
   } catch (error) {
     dispatch(friends_fail());
@@ -58,7 +57,7 @@ export const getFriends = (userId) => async (dispatch) => {
 export const get_All_Users = () => async (dispatch) => {
   dispatch(load_allUser());
   try {
-    const res = await axios.get("http://localhost:8080/users/allUsers");
+    const res = await axios.get(`${baseUrl}/users/allUsers`);
     dispatch(get_allUser(res.data));
   } catch (error) {
     dispatch(fail_allUser());

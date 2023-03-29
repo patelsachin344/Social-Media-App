@@ -1,5 +1,5 @@
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const LOGINSUCCESS = "LOGINSUCCESS";
 export const LOGINFAIL = "LOGINFAIL";
@@ -78,7 +78,7 @@ export const logedinUser = () => async (dispatch) => {
     const token = localStorage.getItem("userToken");
     // console.log(token, "token");
     if (token) {
-      const res = await axios.get("http://localhost:8080/auth/logedin", {
+      const res = await axios.get(`${baseUrl}/auth/logedin`, {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -96,7 +96,7 @@ export const signupUser = (user) => async (dispatch) => {
 
   dispatch(signup_load());
   try {
-    await axios.post("http://localhost:8080/auth/register", user);
+    await axios.post(`${baseUrl}/auth/register`, user);
     // navigate("/login");
   } catch (error) {
     dispatch(signup_fail());
@@ -104,11 +104,11 @@ export const signupUser = (user) => async (dispatch) => {
 };
 
 export const loginUser = (user) => async (dispatch) => {
-  console.log("try to login", user);
+  console.log(baseUrl, "action");
 
   dispatch(login_load());
   try {
-    const res = await axios.post("http://localhost:8080/auth/login", user);
+    const res = await axios.post(`${baseUrl}/auth/login`, user);
     // console.log(res.data, "response from action redux");
     localStorage.setItem("userToken", res.data?.token);
     dispatch(login_true());
@@ -120,7 +120,7 @@ export const loginUser = (user) => async (dispatch) => {
 
 export const getCurrentUser = (userId) => async (dispatch) => {
   try {
-    const res = await axios.get(`http://localhost:8080/users?userId=${userId}`);
+    const res = await axios.get(`${baseUrl}/users?userId=${userId}`);
 
     dispatch(get_CurrentUser(res.data));
   } catch (error) {
@@ -130,7 +130,7 @@ export const getCurrentUser = (userId) => async (dispatch) => {
 
 export const uploadUserImg = (userId, data) => async (dispatch) => {
   try {
-    await axios.put(`http://localhost:8080/users/${userId}`, data);
+    await axios.put(`${baseUrl}/users/${userId}`, data);
     dispatch(upload_userImg());
     dispatch(getCurrentUser(userId));
   } catch (error) {
@@ -140,9 +140,7 @@ export const uploadUserImg = (userId, data) => async (dispatch) => {
 
 export const getSingleUserbyusername = (username) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `http://localhost:8080/users?username=${username}`
-    );
+    const res = await axios.get(`${baseUrl}/users?username=${username}`);
     console.log(res.data);
 
     dispatch(get_singleUserbyUsername(res.data));

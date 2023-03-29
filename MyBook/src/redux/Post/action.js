@@ -1,4 +1,5 @@
 import axios from "axios";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const POSTSUCCESS = "POSTSUCCESS";
 export const POSTFAIL = "POSTFAIL";
@@ -48,10 +49,8 @@ export const getPost = (username, currentUserId) => async (dispatch) => {
   dispatch(post_load());
   try {
     const res = username
-      ? await await axios.get("http://localhost:8080/post/profile/" + username)
-      : await await axios.get(
-          `http://localhost:8080/post/timeline/${currentUserId}`
-        );
+      ? await await axios.get(`${baseUrl}/post/profile/` + username)
+      : await await axios.get(`${baseUrl}/post/timeline/${currentUserId}`);
     dispatch(
       post_success(
         res.data.sort((a, b) => {
@@ -67,7 +66,7 @@ export const getPost = (username, currentUserId) => async (dispatch) => {
 export const uploadPost = (newPost, currentUser) => (dispatch) => {
   dispatch(upload_load());
   try {
-    axios.post("http://localhost:8080/post", newPost);
+    axios.post(`${baseUrl}/post`, newPost);
     dispatch(upload_success());
     dispatch(getPost(null, currentUser));
   } catch (error) {

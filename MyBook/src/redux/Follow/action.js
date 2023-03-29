@@ -1,3 +1,6 @@
+import axios from "axios";
+const baseUrl = process.env.REACT_APP_BASE_URL;
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 
@@ -14,7 +17,7 @@ const unfollow_user = () => {
 
 const followUser = (userId, currentUserId) => async (dispatch) => {
   try {
-    await axios.put(`http://localhost:8080/users/${userId}/unfollow`, {
+    await axios.put(`${baseUrl}/users/${userId}/unfollow`, {
       userId: currentUserId,
     });
   } catch (error) {}
