@@ -47,10 +47,12 @@ app.use("/users", usersRouter);
 app.use("/auth", authRouter);
 app.use("/post", postRouter);
 
+const Port = +process.env.PORT || 5000;
+
 connect()
   .then(() => {
-    app.listen(8080, () => {
-      console.log("listening on 8080");
+    app.listen(Port, () => {
+      console.log(`listening on ${Port}`);
     });
   })
   .catch((err) => {

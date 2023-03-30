@@ -34,7 +34,7 @@ const genrateToken = (user) => {
   if (user.password) {
     delete user.password;
   }
-  const token = jwt.sign(user, "This is social auth token");
+  const token = jwt.sign(user, process.env.SECURITY_KEY);
   return token;
 };
 
