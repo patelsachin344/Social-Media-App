@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getCurrentUser } from "../Login/action";
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 export const FRIENDSUCCESS = "FRIENDSUCCESS";
@@ -63,3 +64,21 @@ export const get_All_Users = () => async (dispatch) => {
     dispatch(fail_allUser());
   }
 };
+
+export const followUser = (currentUserId, watchuserId) => async (dispatch) => {
+  try {
+    await axios.put(`${baseUrl}/users/${watchuserId}/follow`, {
+      userId: currentUserId,
+    });
+    dispatch(getCurrentUser(currentUserId));
+  } catch (error) {}
+};
+export const unfollowUser =
+  (currentUserId, watchuserId) => async (dispatch) => {
+    try {
+      await axios.put(`${baseUrl}/users/${watchuserId}/unfollow`, {
+        userId: currentUserId,
+      });
+      dispatch(getCurrentUser(currentUserId));
+    } catch (error) {}
+  };

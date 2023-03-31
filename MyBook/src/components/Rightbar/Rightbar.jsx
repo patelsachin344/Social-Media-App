@@ -1,11 +1,13 @@
 import { Add, Remove } from "@material-ui/icons";
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContextt";
-import { Users } from "../../DummyData";
-import { getFriends } from "../../redux/Friends/action";
+import {
+  followUser,
+  getFriends,
+  unfollowUser,
+} from "../../redux/Friends/action";
 import { Online } from "../Online/Online";
 import "./Rightbar.css";
 
@@ -31,13 +33,9 @@ export const Rightbar = ({ user }) => {
   // console.log(currentUser?.followings?.includes(user?._id));
   const handleFollow = async () => {
     if (follow) {
-      await axios.put(`http://localhost:8080/users/${user._id}/unfollow`, {
-        userId: currentUser?._id,
-      });
+      dispatch(unfollowUser(currentUser?._id, user._id));
     } else {
-      await axios.put(`http://localhost:8080/users/${user._id}/follow`, {
-        userId: currentUser?._id,
-      });
+      dispatch(followUser(currentUser?._id, user._id));
     }
     setFollow(!follow);
   };
