@@ -64,7 +64,7 @@ router.get("/logedin", async (req, res) => {
   if (authorization) {
     try {
       const token = authorization.split(" ")[1];
-      const user = jwt.verify(token, "This is social auth token");
+      const user = jwt.verify(token, process.env.SECURITY_KEY);
       console.log(user);
       res.send({ user });
     } catch (error) {
