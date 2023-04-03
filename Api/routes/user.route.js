@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const bcrypt = require("bcrypt");
 const User = require("../model/user.model");
-
+const dotenv = require("dotenv").config();
 // updata the user credentials
 
 router.put("/:id", async (req, res) => {
