@@ -71,9 +71,9 @@ router.get("/", async (req, res) => {
   }
 });
 // getAll users
-router.get("/allUsers", async (req, res) => {
+router.get("/allUsers/:userId", async (req, res) => {
   try {
-    const users = await User.find();
+    const users = await User.find({ _id: { $nin: [req.params.userId] } });
     res.status(200).json(users);
   } catch (error) {
     res.status(500).json(error);

@@ -35,7 +35,7 @@ export const Post = ({ post }) => {
       <div className="postWrapper">
         <div className="postTop">
           <div className="postTopLeft">
-            <Link to={`friendsprofile/${post?.userId?.username}`}>
+            <Link to={`/friendsprofile/${post?.userId?.username}`}>
               <img
                 className="postProfileImg"
                 src={

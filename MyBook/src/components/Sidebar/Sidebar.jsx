@@ -12,16 +12,17 @@ import {
   School,
 } from "@material-ui/icons";
 
-import { CloseFriend } from "../CloseFriend/CloseFriend";
+import { AllUsers } from "../AllUsers/AllUsers";
 import { useDispatch, useSelector } from "react-redux";
 import { logedinUser } from "../../redux/Login/action";
 import { get_All_Users } from "../../redux/Friends/action";
 
 export const Sidebar = () => {
   const { friends, getAllUsers } = useSelector((state) => state.friends);
-  // console.log(getAllUsers);
+  const { currentUser } = useSelector((state) => state.user);
+
   useEffect(() => {
-    dispatch(get_All_Users());
+    dispatch(get_All_Users(currentUser?._id));
   }, []);
 
   const [logout, setLogout] = useState(false);
@@ -87,7 +88,7 @@ export const Sidebar = () => {
           Show All Users
           {getAllUsers &&
             getAllUsers.map((friend) => (
-              <CloseFriend key={friend.username} friend={friend} />
+              <AllUsers key={friend.username} friend={friend} />
             ))}
         </ul>
       </div>

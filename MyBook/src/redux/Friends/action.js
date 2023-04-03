@@ -55,10 +55,10 @@ export const getFriends = (userId) => async (dispatch) => {
   }
 };
 
-export const get_All_Users = () => async (dispatch) => {
+export const get_All_Users = (userId) => async (dispatch) => {
   dispatch(load_allUser());
   try {
-    const res = await axios.get(`${baseUrl}/users/allUsers`);
+    const res = await axios.get(`${baseUrl}/users/allUsers/${userId}`);
     dispatch(get_allUser(res.data));
   } catch (error) {
     dispatch(fail_allUser());
