@@ -3,8 +3,6 @@ import "./Online.css";
 import React from "react";
 
 export const Online = ({ friend }) => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
   return (
     <li className="rightbarFriend">
       <div className="rightbarProfileImgContainer">
@@ -13,7 +11,7 @@ export const Online = ({ friend }) => {
           src={
             friend.profilePicture
               ? friend.profilePicture
-              : PF + "person/images.png"
+              : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
           }
           alt=""
         />

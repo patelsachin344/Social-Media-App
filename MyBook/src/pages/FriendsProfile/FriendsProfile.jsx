@@ -15,9 +15,6 @@ import { Cancel, CloudUpload } from "@material-ui/icons";
 import axios from "axios";
 
 export const FriendsProfile = () => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-  const [profileFile, setProfileFile] = useState(null);
-  const [coverFile, setCoverFile] = useState(null);
   const { currentUser, getUserByUsername } = useSelector((state) => state.user);
   const { friendUsername } = useParams();
   const dispatch = useDispatch();
@@ -39,7 +36,7 @@ export const FriendsProfile = () => {
                   src={
                     getUserByUsername?.coverPicture
                       ? getUserByUsername?.coverPicture
-                      : PF + "/person/noCover.jpeg"
+                      : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/noCover_hqefdp.jpg`
                   }
                   alt=""
                 />
@@ -50,7 +47,7 @@ export const FriendsProfile = () => {
                   src={
                     getUserByUsername?.profilePicture
                       ? getUserByUsername?.profilePicture
-                      : PF + "/person/images.png"
+                      : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
                   }
                   alt=""
                 />
@@ -62,7 +59,8 @@ export const FriendsProfile = () => {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed username={friendUsername} />
+            {/* <Feed username={getUserByUsername.username} /> */}
+            <Feed />
             <Rightbar user={getUserByUsername} />
           </div>
         </div>

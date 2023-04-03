@@ -19,7 +19,7 @@ export const Feed = () => {
         currentUser?._id
       )
     );
-  }, []);
+  }, [friendUsername, currentUsername]);
 
   return (
     <div className="feed">

@@ -6,8 +6,6 @@ import { Chat, Notifications, Person, Search } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 
 export const Topbar = () => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
   const { currentUser } = useSelector((state) => state.user);
 
   return (
@@ -52,7 +50,7 @@ export const Topbar = () => {
             src={
               currentUser?.profilePicture
                 ? currentUser?.profilePicture
-                : PF + "person/images.png"
+                : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
             }
             alt=""
             className="topbarImg"

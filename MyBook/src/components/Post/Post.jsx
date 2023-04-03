@@ -11,7 +11,6 @@ import { useDispatch, useSelector } from "react-redux";
 export const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
   const { currentUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -41,7 +40,7 @@ export const Post = ({ post }) => {
                 src={
                   post?.userId?.profilePicture
                     ? post?.userId?.profilePicture
-                    : PF + "person/images.png"
+                    : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
                 }
                 alt=""
               />
@@ -62,13 +61,13 @@ export const Post = ({ post }) => {
           <div className="postBottomLeft">
             <img
               className="likeIcon"
-              src={`${PF}like.png`}
+              src={`https://res.cloudinary.com/deje6buuz/image/upload/v1680505715/like_tzcbzv.png`}
               onClick={likeHandler}
               alt=""
             />
             <img
               className="likeIcon"
-              src={`${PF}heart.png`}
+              src={`https://res.cloudinary.com/deje6buuz/image/upload/v1680505715/heart_pg4she.png`}
               s
               onClick={likeHandler}
               alt=""

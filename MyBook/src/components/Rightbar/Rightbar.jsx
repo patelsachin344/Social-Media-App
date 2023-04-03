@@ -12,7 +12,6 @@ import { Online } from "../Online/Online";
 import "./Rightbar.css";
 
 export const Rightbar = ({ user }) => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const { currentUser } = useSelector((state) => state.user);
   const { friends } = useSelector((state) => state.friends);
   const dispatch = useDispatch();
@@ -44,12 +43,20 @@ export const Rightbar = ({ user }) => {
     return (
       <>
         <div className="birthdayContainer">
-          <img className="birthdayImg" src={`${PF}gift.png`} alt="" />
+          <img
+            className="birthdayImg"
+            src={`https://res.cloudinary.com/deje6buuz/image/upload/v1680505715/gift_krcldu.png`}
+            alt=""
+          />
           <span className="birthdayText">
             <b>Sachin</b> and <b>3 other friends</b> have a birhday today.
           </span>
         </div>
-        <img className="rightbarAd" src={`${PF}ad.png`} alt="" />
+        <img
+          className="rightbarAd"
+          src={`https://res.cloudinary.com/deje6buuz/image/upload/v1680505730/ad_av2lyi.png`}
+          alt=""
+        />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
           {friends &&
@@ -104,7 +111,7 @@ export const Rightbar = ({ user }) => {
                     src={
                       friend.profilePicture
                         ? friend.profilePicture
-                        : PF + "person/images.png"
+                        : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
                     }
                     alt=""
                     className="rightbarFollowingImg"

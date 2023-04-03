@@ -18,7 +18,6 @@ export const Share = () => {
   // console.log(currentUser, "response from login ,action redux");
   // console.log(uploading, "uploading");
 
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const desc = useRef();
 
   const handleSubmit = async (e) => {
@@ -62,7 +61,7 @@ export const Share = () => {
             src={
               currentUser?.profilePicture
                 ? currentUser?.profilePicture
-                : PF + "person/images.png"
+                : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
             }
             alt=""
           />

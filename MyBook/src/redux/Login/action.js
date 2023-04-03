@@ -141,7 +141,7 @@ export const uploadUserImg = (userId, data) => async (dispatch) => {
 export const getSingleUserbyusername = (username) => async (dispatch) => {
   try {
     const res = await axios.get(`${baseUrl}/users?username=${username}`);
-    console.log(res.data);
+    // console.log(res.data);
 
     dispatch(get_singleUserbyUsername(res.data));
   } catch (error) {

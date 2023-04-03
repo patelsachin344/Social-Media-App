@@ -15,7 +15,6 @@ import { Cancel, CloudUpload } from "@material-ui/icons";
 import axios from "axios";
 
 export const Profile = () => {
-  const PF = process.env.REACT_APP_PUBLIC_FOLDER;
   const [profileFile, setProfileFile] = useState(null);
   const [coverFile, setCoverFile] = useState(null);
   const { currentUser } = useSelector((state) => state.user);
@@ -84,7 +83,7 @@ export const Profile = () => {
                   src={
                     currentUser?.coverPicture
                       ? currentUser?.coverPicture
-                      : PF + "/person/noCover.jpeg"
+                      : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/noCover_hqefdp.jpg`
                   }
                   alt=""
                 />
@@ -102,7 +101,7 @@ export const Profile = () => {
                   src={
                     currentUser?.profilePicture
                       ? currentUser?.profilePicture
-                      : PF + "/person/images.png"
+                      : `https://res.cloudinary.com/deje6buuz/image/upload/v1680505965/images_s29pa0.png`
                   }
                   alt=""
                 />
