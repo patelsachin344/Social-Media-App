@@ -16,9 +16,10 @@ import { AllUsers } from "../AllUsers/AllUsers";
 import { useDispatch, useSelector } from "react-redux";
 import { logedinUser } from "../../redux/Login/action";
 import { get_All_Users } from "../../redux/Friends/action";
+import { Link } from "react-router-dom";
 
 export const Sidebar = () => {
-  const { friends, getAllUsers } = useSelector((state) => state.friends);
+  const { getAllUsers } = useSelector((state) => state.friends);
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
@@ -38,7 +39,9 @@ export const Sidebar = () => {
         <ul className="sidebarList">
           <li className="sidebarListItem">
             <RssFeed className="sidebarIcon" />
-            <span className="sidebarListItemText">Feed</span>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <span className="sidebarListItemText">Feed</span>
+            </Link>
           </li>
           <li className="sidebarListItem">
             <Chat className="sidebarIcon" />

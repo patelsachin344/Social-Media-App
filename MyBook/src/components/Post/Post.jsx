@@ -4,9 +4,9 @@ import { format } from "timeago.js";
 import { Link } from "react-router-dom";
 import { MoreVert } from "@material-ui/icons";
 import { useState } from "react";
-import axios from "axios";
 
 import { useDispatch, useSelector } from "react-redux";
+import { getLikesDislikes } from "../../redux/Likes/action";
 
 export const Post = ({ post }) => {
   const [like, setLike] = useState(post.likes.length);
@@ -20,11 +20,7 @@ export const Post = ({ post }) => {
   }, [currentUser?._id, post.like]);
 
   const likeHandler = () => {
-    try {
-      axios.put(`http://localhost:8080/post/${post._id}/like`, {
-        userId: currentUser?._id,
-      });
-    } catch (error) {}
+    dispatch(getLikesDislikes(currentUser?._id, post?._id));
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
   };

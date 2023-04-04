@@ -11,14 +11,14 @@ import { ChakraProvider } from "@chakra-ui/react";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <ChakraProvider> */}
-    <BrowserRouter>
-      <AuthContextProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </AuthContextProvider>
-    </BrowserRouter>
-    {/* </ChakraProvider> */}
+    <ChakraProvider>
+      <BrowserRouter>
+        <AuthContextProvider>
+          <Provider store={store}>
+            <App />
+          </Provider>
+        </AuthContextProvider>
+      </BrowserRouter>
+    </ChakraProvider>
   </React.StrictMode>
 );

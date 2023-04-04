@@ -1,9 +1,12 @@
-import React, { useContext } from "react";
 import "./topbar.css";
 import { Link } from "react-router-dom";
 
 import { Chat, Notifications, Person, Search } from "@material-ui/icons";
 import { useSelector } from "react-redux";
+import { RightDrawer } from "../Rightbar/RightDrawer";
+import { SidebarDrawer } from "../Sidebar/SidebarDrawer";
+import { Show } from "@chakra-ui/react";
+import { Box } from "@material-ui/core";
 
 export const Topbar = () => {
   const { currentUser } = useSelector((state) => state.user);
@@ -11,7 +14,11 @@ export const Topbar = () => {
   return (
     <div className="topbarcontainer">
       <div className="leftTopbar">
-        <Link to={"/"} style={{ textDecoration: "none" }}>
+        <Box className="sidebarShower">
+          <SidebarDrawer />
+        </Box>
+
+        <Link to={"/"} className="topbarHomeButton">
           <span className="logo">MyBook</span>
         </Link>
       </div>
@@ -26,10 +33,10 @@ export const Topbar = () => {
         </span>
       </div>
       <div className="rightTopbar">
-        <div className="topbarLinks">
+        {/* <div className="topbarLinks">
           <span className="topbarLink">HomePage</span>
           <span className="topbarLink">Timeline</span>
-        </div>
+        </div> */}
         <div className="topbarIcons">
           <div className="topbarIconItem">
             <Person />
@@ -45,7 +52,10 @@ export const Topbar = () => {
           </div>
         </div>
 
-        <Link to={`/profile/${currentUser?.username}`}>
+        <Link
+          to={`/profile/${currentUser?.username}`}
+          className="topbarImgShowerLink"
+        >
           <img
             src={
               currentUser?.profilePicture
@@ -57,6 +67,9 @@ export const Topbar = () => {
           />
         </Link>
       </div>
+      <Box className="rightbarShower">
+        <RightDrawer />
+      </Box>
     </div>
   );
 };

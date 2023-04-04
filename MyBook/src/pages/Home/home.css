@@ -1,5 +1,19 @@
 .homeContainer {
   display: flex;
   width: 100%;
-  /* padding-top: 10%; */
+  padding-top: 2rem;
+}
+.homeContainer2 {
+  display: none;
+}
+
+@media all and (min-width: 300px) and (max-width: 750px) {
+  .homeContainer {
+    display: none;
+  }
+  .homeContainer2 {
+    display: block;
+    width: 100%;
+    padding-top: 2rem;
+  }
 }
