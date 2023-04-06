@@ -84,3 +84,18 @@
   cursor: pointer;
   margin-top: 1%;
 }
+
+@media all and (min-width: 300px) and (max-width: 750px) {
+  .registerWrapper {
+    width: 70%;
+    height: 70%;
+    display: block;
+  }
+  .register {
+    text-align: center;
+    height: fit-content;
+  }
+  .registerRight {
+    margin-top: 1rem;
+  }
+}

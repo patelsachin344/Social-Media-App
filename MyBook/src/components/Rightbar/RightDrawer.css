@@ -1,0 +1,32 @@
+.rightDrawerImage {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+}
+.rightDrawerProfile {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  margin: auto;
+}
+.rightDrawerProfileDiv {
+  margin: 0 auto;
+  background-color: #1877f2;
+  width: 100%;
+  padding: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.rightDrawerFriendList {
+  padding: 0;
+  padding-left: 5%;
+  padding-top: 5%;
+  list-style: none;
+  /* background-color: bisque; */
+}

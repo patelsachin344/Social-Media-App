@@ -110,11 +110,15 @@
   }
   .sidebarShower {
     display: block;
+    /* background-color: #1877f2; */
   }
   .rightbarShower {
     display: block;
   }
   .topbarImgShowerLink {
     display: none;
+  }
+  .searchInput {
+    width: 50%;
   }
 }

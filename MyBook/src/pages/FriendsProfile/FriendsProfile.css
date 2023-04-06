@@ -97,3 +97,22 @@
   cursor: pointer;
   opacity: 0.7;
 }
+.profileRightBottomSmallScreen {
+  display: none;
+}
+
+@media all and (min-width: 300px) and (max-width: 750px) {
+  .profileRightBottomSmallScreen {
+    display: block;
+  }
+  .profileRightBottom {
+    display: none;
+  }
+
+  .kuchbhi {
+    margin-top: -6rem;
+  }
+  .sidebarCantainer {
+    display: none;
+  }
+}

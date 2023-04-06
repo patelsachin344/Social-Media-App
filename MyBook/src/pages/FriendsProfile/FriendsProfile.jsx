@@ -26,7 +26,9 @@ export const FriendsProfile = () => {
     <div>
       <Topbar />
       <div className="profile">
-        <Sidebar />
+        <div className="sidebarCantainer">
+          <Sidebar />
+        </div>
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
@@ -62,6 +64,12 @@ export const FriendsProfile = () => {
             {/* <Feed username={getUserByUsername.username} /> */}
             <Feed />
             <Rightbar user={getUserByUsername} />
+          </div>
+          <div className="profileRightBottomSmallScreen">
+            <Rightbar user={getUserByUsername} />
+            <div className="kuchbhi">
+              <Feed />
+            </div>
           </div>
         </div>
       </div>

@@ -29,7 +29,7 @@ export const Sidebar = () => {
   const [logout, setLogout] = useState(false);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.clear("userToken");
+    localStorage.removeItem("userToken");
     dispatch(logedinUser());
     setLogout(!logout);
   };

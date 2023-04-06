@@ -5,7 +5,6 @@ import { Chat, Notifications, Person, Search } from "@material-ui/icons";
 import { useSelector } from "react-redux";
 import { RightDrawer } from "../Rightbar/RightDrawer";
 import { SidebarDrawer } from "../Sidebar/SidebarDrawer";
-import { Show } from "@chakra-ui/react";
 import { Box } from "@material-ui/core";
 
 export const Topbar = () => {

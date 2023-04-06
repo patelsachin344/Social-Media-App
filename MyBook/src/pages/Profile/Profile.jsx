@@ -152,6 +152,12 @@ export const Profile = () => {
             <Feed username={username} />
             <Rightbar user={currentUser} />
           </div>
+          <div className="profileRightBottomSmallScreen">
+            <Rightbar user={currentUser} />
+            <div className="kuchbhi">
+              <Feed username={username} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
