@@ -11,8 +11,6 @@ import {
   getSingleUserbyusername,
   uploadUserImg,
 } from "../../redux/Login/action";
-import { Cancel, CloudUpload } from "@material-ui/icons";
-import axios from "axios";
 
 export const FriendsProfile = () => {
   const { currentUser, getUserByUsername } = useSelector((state) => state.user);
@@ -26,7 +24,7 @@ export const FriendsProfile = () => {
     <div>
       <Topbar />
       <div className="profile">
-        <div className="sidebarCantainer">
+        <div className="friendsProfileSidebarCantainer">
           <Sidebar />
         </div>
         <div className="profileRight">

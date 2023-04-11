@@ -113,4 +113,7 @@
   .kuchbhi {
     margin-top: -6rem;
   }
+  .profileSidebarContainer {
+    display: none;
+  }
 }

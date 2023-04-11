@@ -73,7 +73,9 @@ export const Profile = () => {
     <div>
       <Topbar />
       <div className="profile">
-        <Sidebar />
+        <div className="profileSidebarContainer">
+          <Sidebar />
+        </div>
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
